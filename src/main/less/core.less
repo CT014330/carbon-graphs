@@ -15,8 +15,6 @@ svg:not(:root) {
 .carbon-graph-container {
     display: block;
     color: @dark;
-    padding-bottom: 0.8333rem;
-    padding-top: 0.8333rem;
     vertical-align: middle;
     width: 100%;
 }
@@ -88,6 +86,7 @@ svg:not(:root) {
     flex: 1 1 100%;
     margin: 0;
     padding: 0;
+    padding-left: 0px;
 
     & .carbon-legend-item {
         display: flex;
@@ -151,6 +150,9 @@ svg:not(:root) {
 
         & .carbon-legend-item-text {
             color: @grey65;
+            word-wrap: normal;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
     }
 }
