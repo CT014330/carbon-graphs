@@ -151,14 +151,9 @@
     "url": "https://github.com/cerner/carbon-graphs.git"
   },
   "scripts": {
-    "build": "npm run compile",
-    "clean:all": "rimraf ./package-lock.json && rimraf ./node_modules",
-    "clean:install": "npm run clean:all && npm install",
-    "clean:obsolete-jest-snapshots": "jest -u",
-    "clean:obsolete-wdio-snapshots": "rimraf ./tests/wdio/**/__snapshots__ && npm run test:wdio",
-    "compile": "npm run compile:clean && npm run compile:build",
-    "compile:clean": "rimraf lib",
-    "compile:build": "babel src --out-dir lib --copy-files",
+    "build": "webpack --config ./build/webpack/webpack.config.js --env.TYPE=LIB",
+    "build:dist": "webpack --config ./build/webpack/webpack.config.js --env.TYPE=DIST",
+    "build:site": "npm run docs && webpack --config ./build/webpack/site.webpack.js --env.TYPE=SITE",
     "clean": "rimraf dist lib",
     "dev": "node ./build/webpack/dev-server.js",
     "docs": "node_modules/.bin/jsdoc -c jsdoc.json",
@@ -166,12 +161,10 @@
     "lint:fix": "eslint src --color --fix",
     "lint:source": "eslint src dev --color --max-warnings 0",
     "lint:styles": "stylelint src/main/less/**/*.less",
-    "pack": "NODE_ENV=production webpack --config node_modules/terra-dev-site/config/webpack/webpack.config.js -p",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test",
-    "prepush": "node scripts/prepush/index.js",
+    "prepublishOnly": "npm run clean && npm run build && npm run build:dist",
     "style": "prettier \"src/**/*.*\" \"dev/**/*.*\" \"docs/**/*.md*\" --write",
     "test": "karma start ./build/karma/karma.config.js --single-run --no-auto-watch",
     "test:persist": "karma start ./build/karma/karma.config.js --no-single-run"
+
   }
 }
